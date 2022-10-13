@@ -34,16 +34,16 @@ fetch("https://api.coingecko.com/api/v3/coins/dogecoin")
     })
     .catch(err => console.error(err))
 
-//const timeFunction = () =>{
-//      const now = new Date()
-//      const current = now.getHours() + ':' + now.getMinutes()
-//      document.getElementById("time").innerHTML = `<h1 class = "time">${current}</h1>`
+const timeFunction = () =>{
+     const now = new Date()
+     const current = now.getHours() + ':' + now.getMinutes()
+     document.getElementById("time").innerHTML = `<h1 class = "time">${current}</h1>`
         
 
-//     }
-// setInterval(timeFunction, 1000)
+    }
+setInterval(timeFunction, 1000)
 
-// timeFunction()
+
 
 navigator.geolocation.getCurrentPosition(position =>{
     const latitude = position.coords.latitude
@@ -56,12 +56,14 @@ navigator.geolocation.getCurrentPosition(position =>{
         return res.json()
     })
     .then(data =>{
-        console.log(data.weather[0].icon)
         const weatherIcon = data.weather[0].icon
-        const temperature = data.main.temp
-        document.getElementById("weather-container").innerHTML += `<img src = "https://openweathermap.org/img/wn/${weatherIcon}.png">`
-        document.getElementById("weather").textContent = `${temperature} C°`
-       
+        const temperature = Math.round(data.main.temp)
+        const location = data.name
+        document.getElementById("weather-container").innerHTML = `
+        <img src = "https://openweathermap.org/img/wn/${weatherIcon}.png">
+        <p class="weather">${temperature} C°</p>
+        `
+        document.getElementById("location").textContent += `${location}`
     })
     .catch(err => console.error(err))
 })
